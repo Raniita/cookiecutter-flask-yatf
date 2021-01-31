@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+
+{% block additional_libraries %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/login.css') }}" />
+{% endblock %}
+
+
+{% block body %}
+<div class="container text-center">
+
+    <div id="alert-message">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-warning">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %} -->
+
+    <form class="form-signin" method="POST" action="/login">
+        {{ form.csrf_token }}
+
+        <!-- <img class="mb-4" src="{{ url_for('static',filename='img/logo.webp') }}" alt="" height="72"> -->
+
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+        <fieldset class="email">
+            <!-- {{ form.email.label }} -->
+            {{ form.email(placeholder='youremail@example.com', class='form-control') }}
+            {% if form.email.errors %}
+            <ul class="errors">
+                {% for error in form.email.errors %}
+                <li>{{ error }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+        </fieldset>
+
+        <fieldset class="password">
+            <!-- {{ form.password.label }} -->
+            {{ form.password(placeholder='Password', class='form-control') }}
+            {% if form.email.errors %}
+            <ul class="errors">
+                {% for error in form.password.errors %}
+                <li>{{ error }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+        </fieldset>
+
+        <div class="submit-button">
+            {{ form.submit(class='btn btn-lg btn-primary btn-block') }}
+        </div>
+    </form>
+
+    <div class="login-signup">
+        <span>Don't have an account? <a href="{{ url_for('auth.signup') }}">Sign up.</a></span>
+    </div>
+    
+</div>
+{% endblock %}

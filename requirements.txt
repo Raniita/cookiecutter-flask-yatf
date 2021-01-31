@@ -1,0 +1,13 @@
+Flask
+Flask-Minify
+Flask-SQLAlchemy
+Flask-Login
+Flask-Admin
+Flask-Migrate
+Flask-Script
+Flask-WTF
+Flask-bcrypt
+redis
+rq
+email_validator
+mysqlclient

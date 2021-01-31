@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block additional_libraries %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">yes-another-flask-template</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">
+                    <span data-feather="user"></span> Hello {{user.name}}!</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="{{ url_for('auth.logout') }}">
+                    Sign out</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="sidebar-sticky pt-3">
+                    <ul class="nav flex-column">
+    
+                        <li class="nav-item">
+                            <a class="nav-link {% if active_page == 'dashboard' %}active{% endif %}"
+                                href="{{ url_for('dashboard.home') }}">
+                                <span data-feather="home"></span>
+                                Dashboard <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                    </ul>
+    
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Header1</span>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <span data-feather="compass"></span>
+                                Link1
+                            </a>
+                        </li>
+    
+                    </ul>
+    
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Header2</span>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <span data-feather="home"></span>
+                                Link1
+                            </a>
+                        </li>
+    
+                        {% if user.role == "admin" %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if active_page == " publish" %}active{% endif %}"
+                                href="">
+                                <span data-feather="git-merge"></span>
+                                Link2
+                            </a>
+                        </li>
+                        {% endif %}
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <span data-feather="upload-cloud"></span>
+                                Link3
+                            </a>
+                        </li>
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <span data-feather="upload-cloud"></span>
+                                Link4
+                            </a>
+                        </li>
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <span data-feather="download-cloud"></span>
+                                Link5
+                            </a>
+                        </li>
+    
+                    </ul>
+    
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Header3</span>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <span data-feather="upload-cloud"></span>
+                                Link1
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <span data-feather="download-cloud"></span>
+                                Link2
+                            </a>
+                        </li>
+    
+                        {% if user.role == "admin" %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if active_page == 'tasks' %}active{% endif %}"
+                                href="">
+                                <span data-feather="hash"></span>
+                                Link3
+                            </a>
+                        </li>
+                        {% endif %}
+    
+                    </ul>
+    
+                    {% if user.role == "admin" %}
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Admin</span>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+    
+                        <li class="nav-item">
+                            <a class="nav-link" href="/signup">
+                                <span data-feather="user-plus"></span>
+                                Register user
+                            </a>
+                        </li>
+                    </ul>
+                    {% endif %}
+    
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="padding-top: 20px">
+                
+                <!-- Flash menssages -->
+                <div id="alert-message">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <div class="alert alert-warning">
+                        {{ messages[0] }}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+                
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script>
+        feather.replace()
+    </script>
+
+    <script type=text/javascript>
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+
+    {% block app_scripts %}{% endblock %}
+
+    {% endblock %}

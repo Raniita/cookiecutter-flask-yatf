@@ -23,7 +23,12 @@ $(document).ready(function () {
 
     // Check Job Status. Arg == URL to ask
     function check_job_status(status_url) {
-        $.getJSON(status_url, function (data) {
+        // Fix to avoid CORS on local
+        url = 'http://' + status_url.split('//')[1]
+        //console.log(url)
+        
+        //$.getJSON(status_url, function (data) {
+        $.getJSON(url, function (data) {
             //console.log(data);
             switch (data.status) {
                 case "unknown":
@@ -42,18 +47,19 @@ $(document).ready(function () {
                     // queued/started/deferred
                     // Here set the timeout. Default == 500
                     setTimeout(function () {
-                        check_job_status(status_url);
+                        check_job_status(url);
                     }, 500);
             }
         });
     }
 
     // submit form
-    $("#submit-regenerate_dataset").on('click', function () {
+    $("#submit-hello_task").on('click', function () {
         //flash_alert("Running " + $("#task").val() + "...", "info");
         //console.log('adasdas')
+        //console.log($SCRIPT_ROOT)
         $.ajax({
-            url: $SCRIPT_ROOT + "/enqueue_task/" + "regenerate_dataset",
+            url: $SCRIPT_ROOT + "/api" + "/enqueue_task/" + "hello_task",
             //data: $("#taskForm").serialize(),
             method: "POST",
             //dataType: "json",
@@ -65,6 +71,7 @@ $(document).ready(function () {
                 flash_alert("Running Task", "primary");
                 var status_url = request.getResponseHeader('Location');
                 // Query to URL
+                //console.log(status_url)
                 check_job_status(status_url);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -72,30 +79,4 @@ $(document).ready(function () {
             }
         });
     });
-
-     // submit form
-     $("#submit-publish_sdc").on('click', function () {
-        //flash_alert("Running " + $("#task").val() + "...", "info");
-        //console.log('adasdas')
-        $.ajax({
-            url: $SCRIPT_ROOT + "/enqueue_task/" + "publish_sdc",
-            //data: $("#taskForm").serialize(),
-            method: "POST",
-            //dataType: "json",
-            //success: function (data) {
-            //    flash_alert("Task enqueued", "success");
-            //},
-            success: function (data, status, request) {
-                $('#submit').attr("disabled", "disabled");
-                flash_alert("Running Task", "primary");
-                var status_url = request.getResponseHeader('Location');
-                // Query to URL
-                check_job_status(status_url);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                flash_alert(JSON.parse(jqXHR.responseText).message, "danger");
-            }
-        });
-    });
-
 });

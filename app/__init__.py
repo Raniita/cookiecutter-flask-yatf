@@ -44,9 +44,11 @@ def create_app():
     # Adding the views app
     from app.views.home import dashboard_bp
     from app.views.auth import auth_bp
+    from app.views.api import api_bp
 
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(api_bp)
 
     return app
 

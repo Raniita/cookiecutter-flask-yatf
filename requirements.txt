@@ -10,4 +10,3 @@ Flask-bcrypt
 redis
 rq
 email_validator
-mysqlclient

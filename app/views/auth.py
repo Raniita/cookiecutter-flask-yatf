@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, flash, session, url_for, current_app
 from flask_login import login_required, logout_user, current_user, login_user
+from datetime import datetime
 
 from app.forms import LoginForm, SignupForm
 from app.models import User
@@ -28,6 +29,10 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password(password=form.password.data):
+            # Update last login field on DB
+            user.update_last_login(datetime.now())
+            db.session.add(user)
+            db.session.commit()
             login_user(user)
             next_page = request.args.get('next')
             return redirect(next_page or url_for('dashboard.home'))
@@ -57,9 +62,11 @@ def signup():
                 name = form.name.data,
                 email = form.email.data,
                 website = form.website.data,
+                created_on = datetime.now(),
                 role = 'user'
             )
             user.set_password(form.password.data)
+            user.update_last_login(datetime.now())
 
             db.session.add(user)
             db.session.commit()

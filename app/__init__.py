@@ -3,6 +3,7 @@ from flask_minify import minify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
+from flask_admin import Admin
 
 from app.config import ProductionConfig, DevelopmentConfig
 
@@ -64,6 +65,12 @@ def init_extensions(app):
 
     from app.models import User
 
+    # Start Flask-Admin
+    from app.admin import CustomAdminIndexView, AdminModelView
+
+    admin = Admin(app, name='yes-another-flask-template', index_view=CustomAdminIndexView())
+    admin.add_view(AdminModelView(User, db.session))
+
     try:
         with app.app_context():
             # Create database models
@@ -75,7 +82,7 @@ def init_extensions(app):
             admin_pass = app.config['ADMIN_PASSWORD']
 
             admin = User.query.filter_by(email=admin_email).first()
-            if not admin:
+            if admin.name is None:
                 passw = generate_password_hash(admin_pass, method='sha256')
                 new_user = User(email=admin_email,
                                 name=admin_name,
@@ -96,17 +103,12 @@ def init_extensions(app):
                     
                     db.session.add(admin)
                     db.session.commit()
-                    app.logger.info('Updated admin password')
+                    #app.logger.info('Updated admin password')
                 
             app.logger.info('Database working')
 
     except Exception as e:
-        print(e)
+        app.logger.error('Exception Found' + str(e))
         app.logger.error('Database not found. Please read README.md to create the db.')
-
-    #@login_manager.user_loader
-    #def load_user(user_id):
-    #    # Querying the primarey key of user
-    #    return User.query.get(int(user_id))
 
     app.logger.info('Done. Flask extensions started.')

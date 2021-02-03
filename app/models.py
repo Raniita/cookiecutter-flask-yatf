@@ -63,5 +63,16 @@ class User(UserMixin, db.Model):
         """ Check hashed password """
         return check_password_hash(self.password, password)
 
+    def is_admin(self):
+        """ Return True if admin """
+        if self.role == 'admin':
+            return True
+        else:
+            return False
+
+    def update_last_login(self, time):
+        """ Update user last_login datetime """
+        self.last_login = time
+
     def __repr__(self):
         return '<User {}>'.format(self.username)

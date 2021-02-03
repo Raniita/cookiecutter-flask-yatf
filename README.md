@@ -6,6 +6,7 @@
 * Flask-Manager
 * Flask-WTF
 * Flask-SQLAlchemy
+* Flask-Admin (Endpoint: `/admin` only for role = `admin`)
 
 ## How to start the app
 `python main.py run`

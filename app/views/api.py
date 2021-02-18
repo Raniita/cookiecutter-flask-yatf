@@ -41,7 +41,7 @@ def enqueue_task(task_name):
     # This is either pure genius or a massive hack
     task = queue.enqueue(getattr(tasks, task_name), result_ttl=1000)
 
-    app.logger.info("Task enqueued. Actually " + str(len(queue)) + " tasks in queue.")
+    app.logger.info("Task enqueued. Currently " + str(len(queue)) + " tasks in queue.")
 
     return jsonify({}), 202, {
         'Location':

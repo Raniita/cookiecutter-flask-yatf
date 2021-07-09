@@ -1,0 +1,94 @@
+version: '3.7'
+
+services:
+
+  # Main python flask app
+  {{cookiecutter.dir_name}}:
+    image: {{cookiecutter.docker_image_name}}
+    restart: unless-stopped
+    environment:
+      - ADMIN_EMAIL={{cookiecutter.admin_email}}
+      - ADMIN_NAME={{cookiecutter.admin_name}}
+      - ADMIN_PASSWORD={{cookiecutter.admin_password}}
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=passw
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=db
+      - REDIS_HOST=redis
+    volumes:
+      - ./supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{cookieccutter.dir_name}}.entryPoints=web-secure
+      - traefik.http.routers.{{cookiecutter.dir_name}}.rule=Host(`{{cookiecutter.production_domain}}`)
+      # Other containers should always take priority over this one
+      - traefik.http.routers.{{cookiecutter.dir_name}}.priority=1
+      
+  # Runs Job scheduler and CRON schedulers
+  {{cookiecutter.dir_name}}-scheduler:
+    image: {{cookiecutter.docker_image_name}}
+    restart: unless-stopped
+    environment:
+      - ADMIN_EMAIL={{cookiecutter.admin_email}}
+      - ADMIN_NAME={{cookiecutter.admin_name}}
+      - ADMIN_PASSWORD={{cookiecutter.admin_password}}
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=passw
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=db
+      - REDIS_HOST=redis
+    command: flask run_scheduler
+    
+  # Runs long lived tasks and coordinates with lifecycle using redis
+  {{cookiecutter.dir_name}}-worker:
+    image: {{cookiecutter.docker_image_name}}
+    restart: unless-stopped
+    deploy:
+      replicas: 5
+      resources:
+        limits:
+          cpus: "1"
+    environment:
+      - ADMIN_EMAIL={{cookiecutter.admin_email}}
+      - ADMIN_NAME={{cookiecutter.admin_name}}
+      - ADMIN_PASSWORD={{cookiecutter.admin_password}}
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=passw
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=db
+      - REDIS_HOST=redis
+    command: flask run_worker
+    
+  # In-memory database used to coordinate Lifecycle and its worker(s)
+  redis:
+    image: redis
+    restart: unless-stopped
+    
+  # Database used by Lifecycle to store (for the moment) user accounts
+  db:
+    image: mariadb
+    restart: unless-stopped
+    volumes:
+      - ./db:/var/lib/mysql:rw
+    environment:
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=user
+      - MYSQL_ROOT_PASSWORD=pass
+
+  # Database management tool
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    environment:
+      - ADMINER_DESIGN=arcs-material
+      - ADMINER_DEFAULT_SERVER=db
+    volumes:
+      - ./app.sqlite:/app.sqlite
+    depends_on:
+      - db
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.{{cookiecutter.dir_name}}-adminer.entryPoints=web-secure
+      - traefik.http.routers.{{cookiecutter.dir_name}}-adminer.rule=Host(`{{cookiecutter.production_domain}}`) && PathPrefix(`/adminer`)
+    

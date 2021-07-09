@@ -5,5 +5,7 @@
     "secret_key": "flask-template",
     "admin_email": "example@admin.com",
     "admin_username": "admin",
-    "admin_password": "654321"
+    "admin_password": "654321",
+    "docker_image_name": "yatf",
+    "production_domain": "yatf.ranii.pro"
 }

@@ -1,0 +1,9 @@
+{
+    "project_name": "Flask Template",
+    "version": "0.1",
+    "dir_name": "yes-another-flask-template",
+    "secret_key": "flask-template",
+    "admin_email": "example@admin.com",
+    "admin_username": "admin",
+    "admin_password": "654321"
+}

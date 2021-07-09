@@ -5,16 +5,16 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config(object):
     DEBUG = False
     TESTING = False
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'flask-template')
+    SECRET_KEY = os.environ.get('SECRET_KEY', '{{cookiecutter.secret_key}}')
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     RQ_QUEUES = ["default"]
     RQ_SCHEDULER_INTERVAL = 60 
 
-    ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'example@mail.es')
-    ADMIN_NAME = os.environ.get('ADMIN_NAME', 'admin')
-    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', '654321')
+    ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', '{{cookiecutter.admin_email}}')
+    ADMIN_NAME = os.environ.get('ADMIN_NAME', '{{cookiecutter.admin_username}}')
+    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', '{{cookiecutter.admin_password}}')
 
     FLASK_ADMIN_SWATCH = 'lumen'
 

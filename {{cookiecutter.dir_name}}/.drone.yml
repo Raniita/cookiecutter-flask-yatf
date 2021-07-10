@@ -9,10 +9,10 @@ platform:
 steps:
 - name: build
   commands:
-    - docker build -t flask-template .
+    - docker build -t {{cookiecutter.docker_image_name}} .
 
 - name: run
   commands:
-    - cd /var/docker/flask-template
-    - docker-compose stop flask-template flask-template-worker
-    - docker-compose up -d flask-template flask-template-worker
+    - cd /var/docker/{{cookiecutter.dir_name}}
+    - docker-compose stop {{cookiecutter.dir_name}} {{cookiecutter.dir_name}}-worker
+    - docker-compose up -d {{cookiecutter.dir_name}} {{cookiecutter.dir_name}}-worker

@@ -8,7 +8,7 @@ services:
     restart: unless-stopped
     environment:
       - ADMIN_EMAIL={{cookiecutter.admin_email}}
-      - ADMIN_NAME={{cookiecutter.admin_name}}
+      - ADMIN_NAME={{cookiecutter.admin_username}}
       - ADMIN_PASSWORD={{cookiecutter.admin_password}}
       - MYSQL_USER=user
       - MYSQL_PASSWORD=passw
@@ -19,7 +19,7 @@ services:
       - ./supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
     labels:
       - traefik.enable=true
-      - traefik.http.routers.{{cookieccutter.dir_name}}.entryPoints=web-secure
+      - traefik.http.routers.{{cookiecutter.dir_name}}.entryPoints=web-secure
       - traefik.http.routers.{{cookiecutter.dir_name}}.rule=Host(`{{cookiecutter.production_domain}}`)
       # Other containers should always take priority over this one
       - traefik.http.routers.{{cookiecutter.dir_name}}.priority=1
@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
     environment:
       - ADMIN_EMAIL={{cookiecutter.admin_email}}
-      - ADMIN_NAME={{cookiecutter.admin_name}}
+      - ADMIN_NAME={{cookiecutter.admin_username}}
       - ADMIN_PASSWORD={{cookiecutter.admin_password}}
       - MYSQL_USER=user
       - MYSQL_PASSWORD=passw
@@ -50,7 +50,7 @@ services:
           cpus: "1"
     environment:
       - ADMIN_EMAIL={{cookiecutter.admin_email}}
-      - ADMIN_NAME={{cookiecutter.admin_name}}
+      - ADMIN_NAME={{cookiecutter.admin_username}}
       - ADMIN_PASSWORD={{cookiecutter.admin_password}}
       - MYSQL_USER=user
       - MYSQL_PASSWORD=passw

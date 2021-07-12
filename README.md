@@ -58,6 +58,7 @@ Extras:
 - Access control to views based on roles
 - Admin panel (File browser, DB management)
 - Admin dashboard
+- Gotify push notifications
 - Deploy based en Docker [docker-compose]
 
   

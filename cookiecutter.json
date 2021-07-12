@@ -1,0 +1,28 @@
+{
+    "project_name": "Flask Template",
+    "version": "0.1",
+    "dir_name": "yatf-template",
+    "FLASK_ENV": "production",
+    "SECRET_KEY": "flask-template",
+    "ADMIN_EMAIL": "example@admin.com",
+    "ADMIN_NAME": "admin",
+    "ADMIN_PASSWORD": "654321",
+    "MYSQL_USER": "root",
+    "MYSQL_PASSWORD": "root",
+    "MYSQL_HOST": "localhost",
+    "MYSQL_DATABASE": "db",
+    "MYSQL_ROOT_PASSWORD": "root_passw",
+    "REDIS_HOST": "redis",
+    "REDIS_PORT": "6379",
+    "GOTIFY_URL": "none",
+    "GOTIFY_TOKEN": "none",
+    "docker_image_name": "yatf",
+    "production_domain": "yatf.ranii.pro",
+    "_copy_without_render": [
+        "*.html",
+        "app/static/",
+        "app/templates/",
+        "env/",
+        "migrations/"
+    ]
+}

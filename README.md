@@ -1,37 +1,69 @@
-# yes-another-flask-template
 
-## Extensions used
-* Flask
-* Flask-Login
-* Flask-Manager
-* Flask-WTF
-* Flask-SQLAlchemy
-* Flask-Admin (Endpoint: `/admin` only for role = `admin`)
+# YAFT (yes-another-flask-template)
+Flask template starter powered with [Cookiecutter](https://github.com/cookiecutter/cookiecutter).
 
-## How to start the app
-`python main.py run`
+## Description
+Light starter of fully opinionated Flask template. Based on previous experience. Be free to open an issue or fork this repo.
 
-Task to migrate/update/rebuild database
-* Init the migration: `python main.py db init`
-* Create the migrate script: `python main.py db migrate --message 'Initial database migration`
-* Apply the migration (update the model): `python main.py db upgrade`
+## Usage
 
-## How to start a worker for the Tasks
-`python main.py run_worker`
+Install cookiecutter
 
-## Environments Vars
+```bash
+    $ pip install cookiecutter
+```
 
-* FLASK_ENV: _Default: production_
-* SECRET_KEY: _Default: flask-template_
-* ADMIN_EMAIL: _Default: example@mail.es_
-* ADMIN_NAME: _Default: rani_
-* ADMIN_PASSWORD: _Default: 654321_
-* MYSQL_USER: _Default: root_
-* MYSQL_PASSWORD: _Default: root_
-* MYSQL_HOST: _Default: localhost_
-* MYSQL_DATABASE: _Default: db_
-* REDIS_HOST: _Default: redis_
-* REDIS_PORT: _Default: 6379_
+on Arch Linux, use:
 
-### Setting FLASK_ENV
-If __FLASK_ENV__ is different to _production_, the DevelopmentConfig is loaded. Thats means thats the app its using __SQLITE__ for the database, otherwise will be using __MYSQL__
+```bash
+    $ sudo pacman -S python-cookiecutter
+```
+
+Generate the project using the template
+
+```bash
+    $ cookiecutter https://github.com/Raniita/yes-another-flask-template.git
+```
+
+Fill the differents vars for the project.
+
+### Optional
+* Configure virtual environment (pipenv, venv, ...)
+* Install python package requeriments:
+```bash
+    $ pip install -r requeriments.txt
+```
+* Setup git
+* Add License.md
+
+  
+## Features
+Powered with this extensions:
+
+- Flask >= 2.0
+- Flask CLI commands
+- Flask-Minify
+- Flask-SQLAlchemy
+- Flask-Migrate
+- Flask-bcrypt
+- Flask-Login
+- Flask-Admin
+- Flask-WTF
+- Flask-RQ2
+- Flask-DebugToolBar
+
+Extras:
+- Blueprints and [application factory pattern](https://flask.palletsprojects.com/en/2.0.x/patterns/appfactories/)
+- Continous integration with [drone.ci](https://www.drone.io/)
+- Access control to views based on roles
+- Admin panel (File browser, DB management)
+- Admin dashboard
+- Gotify push notifications
+- Deploy based en Docker [docker-compose]
+
+  
+## License
+
+[AGPL-3.0](https://choosealicense.com/licenses/agpl/)
+
+  

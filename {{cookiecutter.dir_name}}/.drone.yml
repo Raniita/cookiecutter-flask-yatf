@@ -1,0 +1,18 @@
+kind: pipeline
+type: exec
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: build
+  commands:
+    - docker build -t {{cookiecutter.docker_image_name}} .
+
+- name: run
+  commands:
+    - cd /var/docker/{{cookiecutter.dir_name}}
+    - docker-compose stop {{cookiecutter.dir_name}} {{cookiecutter.dir_name}}-worker
+    - docker-compose up -d {{cookiecutter.dir_name}} {{cookiecutter.dir_name}}-worker

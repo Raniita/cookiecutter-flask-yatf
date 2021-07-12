@@ -40,7 +40,7 @@ services:
       - MYSQL_PASSWORD={{cookiecutter.MYSQL_PASSWORD}}
       - MYSQL_HOST={{cookiecutter.MYSQL_HOST}}
       - MYSQL_DATABASE={{cookiecutter.MYSQL_DATABASE}}
-      - REDIS_HOST={{cookicutter.REDIS_HOST}}
+      - REDIS_HOST={{cookiecutter.REDIS_HOST}}
       {% if cookiecutter.GOTIFY_URL != "none" %}
       - GOTIFY_URL = {{cookiecutter.GOTIFY_URL}}
       - GOTIFY_TOKEN = {{cookiecutter.GOTIFY_TOKEN}}
@@ -64,7 +64,7 @@ services:
       - MYSQL_PASSWORD={{cookiecutter.MYSQL_PASSWORD}}
       - MYSQL_HOST={{cookiecutter.MYSQL_HOST}}
       - MYSQL_DATABASE={{cookiecutter.MYSQL_DATABASE}}
-      - REDIS_HOST={{cookicutter.REDIS_HOST}}
+      - REDIS_HOST={{cookiecutter.REDIS_HOST}}
       {% if cookiecutter.GOTIFY_URL != "none" %}
       - GOTIFY_URL = {{cookiecutter.GOTIFY_URL}}
       - GOTIFY_TOKEN = {{cookiecutter.GOTIFY_TOKEN}}
@@ -84,7 +84,7 @@ services:
       - ./db:/var/lib/mysql:rw
     environment:
       - MYSQL_DATABASE={{cookiecutter.MYSQL_DATABASE}}
-      - MYSQL_USER={{cookicutter.MYSQL_USER}}
+      - MYSQL_USER={{cookiecutter.MYSQL_USER}}
       - MYSQL_PASSWORD={{cookiecutter.MYSQL_PASSWORD}}
       - MYSQL_ROOT_PASSWORD={{cookiecutter.MYSQL_ROOT_PASSWORD}}
 

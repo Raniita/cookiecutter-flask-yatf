@@ -15,10 +15,10 @@ services:
       - MYSQL_HOST={{cookiecutter.MYSQL_HOST}}
       - MYSQL_DATABASE={{cookiecutter.MYSQL_DATABASE}}
       - REDIS_HOST=redis
-      {{% if cookiecutter.GOTIFY_URL != "none" %}}
+      {% if cookiecutter.GOTIFY_URL != "none" %}
       - GOTIFY_URL = {{cookiecutter.GOTIFY_URL}}
       - GOTIFY_TOKEN = {{cookiecutter.GOTIFY_TOKEN}}
-      {{% endif %}}
+      {% endif %}
     volumes:
       - ./supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
     labels:
@@ -41,6 +41,10 @@ services:
       - MYSQL_HOST={{cookiecutter.MYSQL_HOST}}
       - MYSQL_DATABASE={{cookiecutter.MYSQL_DATABASE}}
       - REDIS_HOST={{cookicutter.REDIS_HOST}}
+      {% if cookiecutter.GOTIFY_URL != "none" %}
+      - GOTIFY_URL = {{cookiecutter.GOTIFY_URL}}
+      - GOTIFY_TOKEN = {{cookiecutter.GOTIFY_TOKEN}}
+      {% endif %}
     command: flask run_scheduler
     
   # Runs long lived tasks and coordinates with lifecycle using redis
@@ -61,6 +65,10 @@ services:
       - MYSQL_HOST={{cookiecutter.MYSQL_HOST}}
       - MYSQL_DATABASE={{cookiecutter.MYSQL_DATABASE}}
       - REDIS_HOST={{cookicutter.REDIS_HOST}}
+      {% if cookiecutter.GOTIFY_URL != "none" %}
+      - GOTIFY_URL = {{cookiecutter.GOTIFY_URL}}
+      - GOTIFY_TOKEN = {{cookiecutter.GOTIFY_TOKEN}}
+      {% endif %}
     command: flask run_worker
     
   # In-memory database used to coordinate Lifecycle and its worker(s)

@@ -7,13 +7,13 @@ services:
     image: {{cookiecutter.docker_image_name}}
     restart: unless-stopped
     environment:
-      - ADMIN_EMAIL={{cookiecutter.admin_email}}
-      - ADMIN_NAME={{cookiecutter.admin_username}}
-      - ADMIN_PASSWORD={{cookiecutter.admin_password}}
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=passw
-      - MYSQL_HOST=db
-      - MYSQL_DATABASE=db
+      - ADMIN_EMAIL={{cookiecutter.ADMIN_EMAIL}}
+      - ADMIN_NAME={{cookiecutter.ADMIN_NAME}}
+      - ADMIN_PASSWORD={{cookiecutter.ADMIN_PASSWORD}}
+      - MYSQL_USER={{cookiecutter.MYSQL_USER}}
+      - MYSQL_PASSWORD={{cookiecutter.MYSQL_PASSWORD}}
+      - MYSQL_HOST={{cookiecutter.MYSQL_HOST}}
+      - MYSQL_DATABASE={{cookiecutter.MYSQL_DATABASE}}
       - REDIS_HOST=redis
     volumes:
       - ./supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
@@ -29,14 +29,14 @@ services:
     image: {{cookiecutter.docker_image_name}}
     restart: unless-stopped
     environment:
-      - ADMIN_EMAIL={{cookiecutter.admin_email}}
-      - ADMIN_NAME={{cookiecutter.admin_username}}
-      - ADMIN_PASSWORD={{cookiecutter.admin_password}}
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=passw
-      - MYSQL_HOST=db
-      - MYSQL_DATABASE=db
-      - REDIS_HOST=redis
+      - ADMIN_EMAIL={{cookiecutter.ADMIN_EMAIL}}
+      - ADMIN_NAME={{cookiecutter.ADMIN_NAME}}
+      - ADMIN_PASSWORD={{cookiecutter.ADMIN_PASSWORD}}
+      - MYSQL_USER={{cookiecutter.MYSQL_USER}}
+      - MYSQL_PASSWORD={{cookiecutter.MYSQL_PASSWORD}}
+      - MYSQL_HOST={{cookiecutter.MYSQL_HOST}}
+      - MYSQL_DATABASE={{cookiecutter.MYSQL_DATABASE}}
+      - REDIS_HOST={{cookicutter.REDIS_HOST}}
     command: flask run_scheduler
     
   # Runs long lived tasks and coordinates with lifecycle using redis
@@ -49,14 +49,14 @@ services:
         limits:
           cpus: "1"
     environment:
-      - ADMIN_EMAIL={{cookiecutter.admin_email}}
-      - ADMIN_NAME={{cookiecutter.admin_username}}
-      - ADMIN_PASSWORD={{cookiecutter.admin_password}}
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=passw
-      - MYSQL_HOST=db
-      - MYSQL_DATABASE=db
-      - REDIS_HOST=redis
+      - ADMIN_EMAIL={{cookiecutter.ADMIN_EMAIL}}
+      - ADMIN_NAME={{cookiecutter.ADMIN_NAME}}
+      - ADMIN_PASSWORD={{cookiecutter.ADMIN_PASSWORD}}
+      - MYSQL_USER={{cookiecutter.MYSQL_USER}}
+      - MYSQL_PASSWORD={{cookiecutter.MYSQL_PASSWORD}}
+      - MYSQL_HOST={{cookiecutter.MYSQL_HOST}}
+      - MYSQL_DATABASE={{cookiecutter.MYSQL_DATABASE}}
+      - REDIS_HOST={{cookicutter.REDIS_HOST}}
     command: flask run_worker
     
   # In-memory database used to coordinate Lifecycle and its worker(s)
@@ -71,10 +71,10 @@ services:
     volumes:
       - ./db:/var/lib/mysql:rw
     environment:
-      - MYSQL_DATABASE=db
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=user
-      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_DATABASE={{cookiecutter.MYSQL_DATABASE}}
+      - MYSQL_USER={{cookicutter.MYSQL_USER}}
+      - MYSQL_PASSWORD={{cookiecutter.MYSQL_PASSWORD}}
+      - MYSQL_ROOT_PASSWORD={{cookiecutter.MYSQL_ROOT_PASSWORD}}
 
   # Database management tool
   adminer:

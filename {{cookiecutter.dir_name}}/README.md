@@ -1,40 +1,75 @@
+
 # {{cookiecutter.project_name}}
 
-## Extensions used
-* Flask
-* Flask-Login
-* Flask-Manager
-* Flask-WTF
-* Flask-SQLAlchemy
-* Flask-Admin (Endpoint: `/admin` only for role = `admin`)
+A brief description of what this project does and who it's for
 
-## How to start the app
-`flask run`
+Powered with [cookiecutter-flask-yatf](https://github.com/Raniita/cookiecutter-flask-yatf)
 
-Task to migrate/update/rebuild database
-* Init the migration: `flask db init`
-* Create the migrate script: `flask db migrate --message 'Initial database migration`
-* Apply the migration (update the model): `flask db upgrade`
+## Features
+Powered with this extensions:
 
-## How to start a worker for the tasks
-`flask run_worker`
+- Flask >= 2.0
+- Flask CLI commands
+- Flask-Minify
+- Flask-SQLAlchemy
+- Flask-Migrate
+- Flask-bcrypt
+- Flask-Login
+- Flask-Admin (endpoint: `/admin` only for `role = admin`)
+- Flask-WTF
+- Flask-RQ2
+- Flask-DebugToolBar
+## Run website
 
-## How to start a scheduler for the tasks (crons jobs)
-`flask run_scheduler`
+```bash
+$ flask run
+```
 
-## Environments Vars
+## Run worker
+```bash
+$ flask run_worker
+```
 
-* FLASK_ENV: _Default: production_
-* SECRET_KEY: _Default: flask-template_
-* ADMIN_EMAIL: _Default: example@mail.es_
-* ADMIN_NAME: _Default: rani_
-* ADMIN_PASSWORD: _Default: 654321_
-* MYSQL_USER: _Default: root_
-* MYSQL_PASSWORD: _Default: root_
-* MYSQL_HOST: _Default: localhost_
-* MYSQL_DATABASE: _Default: db_
-* REDIS_HOST: _Default: redis_
-* REDIS_PORT: _Default: 6379_
+## Run scheduler
+```bash
+$ flask run_scheduler
+```
 
-### Setting FLASK_ENV
-If __FLASK_ENV__ is different to _production_, the DevelopmentConfig is loaded. Thats means thats the app its using __SQLITE__ for the database, otherwise will be using __MYSQL__
+## Migrate database
+Usefull locally
+```bash
+$ flask db init
+$ flask db migrate
+$ flask db upgrade
+```
+## Environment Variables
+
+`FLASK_ENV` [*default: production*]
+
+`SECRET_KEY` [*default: flask-template*]
+
+`ADMIN_EMAIL` [*default: example@mail.es*]
+
+`ADMIN_NAME` [*default: rani*]
+
+`ADMIN_PASSWORD` [*default: 654321*]
+    
+`MYSQL_USER` [*default: root*]
+
+`MYSQL_PASSWORD` [*default: root*]
+
+`MYSQL_HOST` [*default: localhost*]
+
+`MYSQL_DATABASE` [*default: db*]
+
+`REDIS_HOST` [*default: redis*]
+
+`REDIS_PORT` [*default: 6379*]
+
+`GOTIFY_URL` [*default: none*]
+
+`GOTIFY_TOKEN` [*default: none*]
+
+  ## Setting FLASK_ENV
+
+If **FLASK_ENV** is different to *production*, the DevelopmentConfig is loaded. Thats means thats the app its using **SQLITE** for the database, otherwise will be using **MYSQL**

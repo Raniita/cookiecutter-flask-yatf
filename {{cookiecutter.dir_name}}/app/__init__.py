@@ -16,7 +16,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask_rq2 import RQ
 
 from app.admin import CustomAdminIndexView, AdminModelView, MainIndexLink
-from app.config import ProductionConfig, DevelopmentConfig
+from app.config import ProductionConfig, DevelopmentConfig, TestingConfig
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # Extensions declaration
@@ -59,6 +59,9 @@ def create_app():
         
         app.logger.info('Starting with ProductionConfig')
         app.config.from_object(ProductionConfig)
+    elif app.config['ENV'] == 'testing':
+        app.logger.info("Starting with TestingConfig")
+        app.config.from_object(TestingConfig)
     else:
         app.logger.info('Starting with DevelopmentConfig')
         app.config.from_object(DevelopmentConfig)

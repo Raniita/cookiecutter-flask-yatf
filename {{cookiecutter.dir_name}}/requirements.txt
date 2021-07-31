@@ -1,3 +1,5 @@
+pytest
+pytest-flake8
 Flask>=2.0
 Flask-Minify
 Flask-SQLAlchemy

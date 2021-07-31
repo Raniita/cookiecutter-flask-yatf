@@ -1,6 +1,19 @@
+#kind: pipeline
+#type: docker
+#name: validate-tests
+#
+#steps:
+#- name: test
+#  image: python
+#  commands:
+#    - pip install -r requirements.txt
+#    - export FLASK_ENV=testing
+#    - pytest --flake8 -W ignore::DeprecationWarning
+#
+#---
 kind: pipeline
 type: exec
-name: default
+name: deploy
 
 platform:
   os: linux
@@ -10,9 +23,15 @@ steps:
 - name: build
   commands:
     - docker build -t {{cookiecutter.docker_image_name}} .
+  when:
+    branch:
+      - master
 
 - name: run
   commands:
     - cd /var/docker/{{cookiecutter.dir_name}}
     - docker-compose stop {{cookiecutter.dir_name}} {{cookiecutter.dir_name}}-worker
     - docker-compose up -d {{cookiecutter.dir_name}} {{cookiecutter.dir_name}}-worker
+  when:
+  branch:
+    - master

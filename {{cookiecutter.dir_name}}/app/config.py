@@ -58,6 +58,16 @@ class TestingConfig(Config):
     if not os.path.exists(os.path.join(basedir, 'db')):
         os.makedirs(os.path.join(basedir, 'db'))
 
+    # Bcrypt algorithm hashing rounds (reduced for testing purposes only!)
+    BCRYPT_LOG_ROUNDS = 4
+
+    # Enable the TESTING flag to disable the error catching during request handling
+    # so that you get better error reports when performing test requests against the application.
+    TESTING = True
+    
+    # Disable CSRF tokens in the Forms (only valid for testing purposes!)
+    WTF_CSRF_ENABLED = False
+
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'db', 'app_testing.sqlite')
 
     RQ_REDIS_URL = 'redis://localhost:6379'
